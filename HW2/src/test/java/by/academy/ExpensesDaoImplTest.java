@@ -11,8 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Date;
+
 import java.sql.SQLException;
+import java.sql.Date;
 
 import static org.junit.Assert.*;
 
@@ -38,7 +39,16 @@ public class ExpensesDaoImplTest {
     }
 
     @Test
-    public void create() {
+    public void create() throws SQLException {
+        ExpensesDto expensesDto = new ExpensesDto();
+        expensesDto.setValue(1);
+        expensesDto.setReceiver(2);
+        expensesDto.setPaydate(Date.valueOf("2020-07-09"));
+        expensesDto.setNum(455);
+        expensesDao.create(expensesDto);
+        ExpensesDto expensesDto1 = expensesDao.read(455);
+        assertEquals(expensesDto, expensesDto1);
+        expensesDao.delete(455);
     }
 
     @Test
@@ -56,7 +66,7 @@ public class ExpensesDaoImplTest {
         //When
         ExpensesDto expensesDto = expensesDao.read(2);
         //Then
-        assertEquals(expensesDto,expensesDtoTest);
+        assertEquals(expensesDto, expensesDtoTest);
         DatabaseOperation.DELETE.execute(connection, dataSet);
     }
 
@@ -80,7 +90,7 @@ public class ExpensesDaoImplTest {
         expensesDao.update(expensesDtoTest);
         ExpensesDto expensesDto = expensesDao.read(2);
         //Then
-        assertEquals(expensesDto,expensesDtoTest);
+        assertEquals(expensesDto, expensesDtoTest);
         DatabaseOperation.DELETE.execute(connection, dataSet);
     }
 
