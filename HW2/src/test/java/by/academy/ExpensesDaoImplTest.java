@@ -14,6 +14,8 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -71,7 +73,27 @@ public class ExpensesDaoImplTest {
     }
 
     @Test
-    public void readAll() {
+    public void readAll() throws DatabaseUnitException, SQLException {
+        //Given
+        IDataSet dataSet = new FlatXmlDataSetBuilder()
+                .build(ExpensesDaoImplTest.class
+                        .getResourceAsStream("ExpensesDaoImplTest.xml"));
+        DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
+        List<ExpensesDto> expensesTest = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            ExpensesDto expensesDto = new ExpensesDto();
+            expensesDto.setNum(i + 2);
+            expensesDto.setPaydate(Date.valueOf("2004-03-03"));
+            expensesDto.setReceiver(i + 2);
+            expensesDto.setValue(13+i);
+            expensesTest.add(expensesDto);
+        }
+        //When
+        List<ExpensesDto> expenses = expensesDao.readAll();
+        //Then
+        assertEquals(expenses, expensesTest);
+        DatabaseOperation.DELETE.execute(connection, dataSet);
     }
 
     @Test
@@ -83,7 +105,7 @@ public class ExpensesDaoImplTest {
         DatabaseOperation.CLEAN_INSERT.execute(connection, dataSet);
         ExpensesDto expensesDtoTest = new ExpensesDto();
         expensesDtoTest.setNum(2);
-        expensesDtoTest.setPaydate(Date.valueOf("2005-03-03"));
+        expensesDtoTest.setPaydate(Date.valueOf("2004-03-03"));
         expensesDtoTest.setReceiver(3);
         expensesDtoTest.setValue(16);
         //When
@@ -95,7 +117,19 @@ public class ExpensesDaoImplTest {
     }
 
     @Test
-    public void delete() {
+    public void delete() throws SQLException {
+        //Given
+        ExpensesDto expensesDto = new ExpensesDto();
+        expensesDto.setValue(1);
+        expensesDto.setReceiver(2);
+        expensesDto.setPaydate(Date.valueOf("2020-07-09"));
+        expensesDto.setNum(455);
+        expensesDao.create(expensesDto);
+        //When
+        expensesDao.delete(455);
+        //Then
+        assertNull(expensesDao.read(455));
+
     }
 
     @Test

@@ -1,9 +1,9 @@
 <dataset>
 
     <expenses num="2" paydate="2004-03-03 00:00:00" receiver="2" value="13" />
-    <expenses num="3" paydate="2005-03-03 00:00:00" receiver="3" value="14" />
-    <expenses num="4" paydate="2006-03-03 00:00:00" receiver="4" value="12" />
-    <expenses num="5" paydate="2007-03-03 00:00:00" receiver="5" value="10" />
+    <expenses num="3" paydate="2004-03-03 00:00:00" receiver="3" value="14" />
+    <expenses num="4" paydate="2004-03-03 00:00:00" receiver="4" value="15" />
+    <expenses num="5" paydate="2004-03-03 00:00:00" receiver="5" value="16" />
 
 
 </dataset>
