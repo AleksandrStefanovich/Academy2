@@ -43,6 +43,7 @@
     <module>moduleJar</module>
     <module>moduleWar</module>
       <module>HW2</module>
+      <module>Hibernate</module>
   </modules>
   
 </project>
